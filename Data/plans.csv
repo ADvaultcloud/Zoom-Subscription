@@ -1,0 +1,16 @@
+plan_id,plan_name,monthly_cost,features
+1,Basic,9.99,Limited features
+2,Pro,14.99,Unlimited meetings
+3,Business,19.99,Advanced analytics
+4,Enterprise,49.99,SAML SSO & Admin Controls
+5,Startup,5.99,Affordable for startups
+6,Developer,12.99,API Access
+7,Team,17.99,Team collaboration
+8,Advanced,24.99,Advanced monitoring
+9,Premium,29.99,Priority support
+10,Ultimate,39.99,Full suite access
+11,Free Trial,0.0,7-day trial
+12,Student,4.99,Student discount
+13,Nonprofit,6.99,Discounted NGO plan
+14,Custom,59.99,Tailored features
+15,Lifetime,199.99,One-time payment
