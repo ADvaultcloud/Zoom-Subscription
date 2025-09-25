@@ -1,49 +1,124 @@
-# Zoom-Subscription
-# 🗂️ Subscription Analytics with SQL
+# 📊 Subscription Analytics SQL Project
 
-This project demonstrates how to design, populate, and analyze a **subscription-based business database** using **pure SQL**.  
-It covers the entire workflow – from **creating normalized tables**, **importing CSV data**, and running **analytical queries** to derive actionable business insights.
+This project showcases a complete SQL workflow for analyzing subscription-based business models. It spans from **database schema creation** and **CSV data import**, to executing **analytical SQL queries** that yield powerful business insights.
 
 ---
 
-## 📑 Project Structure
+## 📁 Project Structure
 
-- `create_tables.sql` → SQL script to create normalized database schema (`Users`, `Plans`, `Subscription`, `Payments`, `Churn`).
-- `import_data.sql` → SQL script to bulk import data from CSV files into the database.
-- `analytical_queries.sql` → Collection of queries for deriving insights, including:
-  - Active users per plan  
-  - Monthly revenue trend  
-  - Churn analysis  
-  - Customer lifetime value (CLV) insights  
-  - Payment success rate  
-
+├── import_csv.sql # SQL for creating tables and importing CSV data
+├── analytical_queries.sql # Common analytical queries for metrics & insights
+├── /data/ # Folder containing CSV files (users.csv, plans.csv, etc.)
+└── README.md # Project documentation
 ---
 
-## 🛠️ Tools & Technology
+## 🧱 1. Database Schema & Table Creation
 
-- **SQL** – Schema design, data import, and analytical queries  
-- **Database** – Works with MySQL, PostgreSQL, or SQLite (scripts provided for MySQL/Postgres)  
-- **CSV Data** – Used for initial dataset population  
+The `import_csv.sql` file defines the schema with the following tables:
 
----
+### Tables:
 
-## 🏗️ Steps to Reproduce
+- **Users** – Stores user information.
+- **Plans** – Contains subscription plan details.
+- **Subscriptions** – Tracks user-to-plan subscriptions.
+- **Payments** – Records all user payments.
+- **Churn** – Logs churned users with reasons.
 
-### 1️⃣ Create Database & Tables
-Run the table creation script:
+### Example: Create `Users` Table
 
 ```sql
-SOURCE create_tables.sql;
+CREATE TABLE Users (
+    userid INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    signupdate DATE
+);
 
+Similar definitions exist for Plans, Subscriptions, Payments, and Churn tables.
+📥 2. Importing CSV Data
 
+Each main entity can be populated using CSV files via the COPY command.
+Example:
 
----
+COPY Users(userid, name, email, signupdate)
+FROM '/home/user/users.csv' DELIMITER ',' CSV HEADER;
 
-✅ This README clearly explains:
-- **Purpose** of the project  
-- **Steps** (create tables → import CSV → run queries)  
-- **Deliverables** (insights & KPIs)  
-- Is **professional & GitHub-friendly**  
+COPY Plans(planid, planname, monthlycost, features)
+FROM '/home/user/plans.csv' DELIMITER ',' CSV HEADER;
 
-Would you like me to also include **example SQL snippets** (like a sample query from `analytical_queries.sql` such as “Monthly Revenue Trend”) inside the README so viewers can preview your work before downloading?
+    ⚠️ You may need to adjust file paths and set proper permissions for server-side file access.
 
+Repeat similar commands for:
+
+    subscriptions.csv
+
+    payments.csv
+
+    churn.csv
+
+📊 3. Analytical SQL Queries
+
+The analytical_queries.sql file includes common business queries such as:
+Sample Metrics:
+
+    📈 Plan Popularity – Active subscribers per plan.
+
+    💰 Revenue by Plan – Total revenue earned per subscription plan.
+
+    ⚠️ Payment Success/Failure Rates
+
+    👤 Active Users per Plan
+
+    📆 Monthly Recurring Revenue (MRR) Trends
+
+    📉 Churn and Retention Metrics
+
+    💡 Lifetime Value (LTV), ARPU
+
+    🔥 Top Paying Customers
+
+    🛑 Churn Reasons & Conversion Rates
+
+    📊 Usage Trends & Subscription Duration
+
+Example Query: Revenue by Plan
+
+SELECT p.planname, ROUND(SUM(pay.amount), 2) AS totalrevenue
+FROM payments pay
+JOIN plans p ON pay.planid = p.planid
+WHERE pay.status = 'successful'
+GROUP BY p.planname
+ORDER BY totalrevenue DESC;
+
+📌 4. Business Questions Answered
+
+This project enables you to answer essential product and growth questions:
+
+    ✅ What plans are most popular and profitable?
+
+    🔄 What is the current churn rate and why do users leave?
+
+    💎 Who are the top paying or most loyal customers?
+
+    📉 How is MRR trending month-over-month?
+
+    🧮 What’s the average LTV, ARPU, and conversion rate?
+
+🚀 Usage Instructions
+
+    Run Schema & Import Script
+    Execute import_csv.sql to create tables and load data from CSVs.
+
+    Explore Data with Analytical Queries
+    Use analytical_queries.sql to extract metrics and generate insights.
+
+    Customize as Needed
+    Tailor queries to suit your specific business questions or reporting needs.
+
+📌 Notes
+
+    This project assumes PostgreSQL, but SQL syntax can be adapted for MySQL, SQLite, etc.
+
+    Make sure to update file paths in the COPY commands.
+
+    For local development, use a tool like pgAdmin, DBeaver, or psql CLI.
