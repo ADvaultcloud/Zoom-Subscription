@@ -1,5 +1,4 @@
 # Zoom-Subscription
-# Zoom-Subscription
 # 🗂️ Subscription Analytics with SQL
 
 This project demonstrates how to design, populate, and analyze a **subscription-based business database** using **pure SQL**.  
